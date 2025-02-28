@@ -33,7 +33,6 @@ fun ProductList(
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
-//        modifier = modifier.padding(start = 6.dp, end = 6.dp, top = 6.dp, bottom = 0.dp ),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         items(products.size) { index ->

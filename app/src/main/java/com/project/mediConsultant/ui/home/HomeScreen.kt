@@ -32,7 +32,6 @@ fun HomeScreen(
 ) {
     val productService = ProductServiceImpl()
     var products by remember { mutableStateOf<List<Product>>(emptyList()) }
-    var showAllCategories by remember { mutableStateOf(false) }
 
     // Load products asynchronously
     LaunchedEffect(Unit) {
@@ -47,65 +46,7 @@ fun HomeScreen(
         .background(if (isSystemInDarkTheme()) Color.Black else Color.White)
         .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 0.dp )
     ) {
-//
-//        // Header row
-//        Row(
-//            modifier = Modifier.fillMaxWidth(),
-//            horizontalArrangement = Arrangement.SpaceBetween
-//        ) {
-//            Text(
-//                text = "Categories",
-//                style = MaterialTheme.typography.headlineSmall,
-//                modifier = Modifier.padding(bottom = 16.dp)
-//            )
-//            Text(
-//                text = "See All",
-//                style = MaterialTheme.typography.bodyLarge,
-//                color = MaterialTheme.colorScheme.primary,
-//                modifier = Modifier
-//                    .padding(top = 8.dp)
-//                    .clickable { showAllCategories = !showAllCategories }
-//            )
-//        }
-//
-//        if (products.isEmpty()) {
-//            Text("No products available.", style = MaterialTheme.typography.bodyLarge)
-//        } else {
-//            // Group products by category and calculate the number of products in each category
-//            val categoryCounts = products.groupBy { it.productCategory }
-//                .mapValues { it.value.size }
-//
-//            // Get unique categories and their respective product count
-//            val uniqueCategories = categoryCounts.keys.toList()
-//            val displayedCategories = if (showAllCategories) uniqueCategories else uniqueCategories.take(2)
-//
-//            CategoryGrid(
-//                categories = displayedCategories,
-//                categoryCounts = categoryCounts,
-//                onCategoryClick = onCategoryClick
-//            )
-//
-//            Spacer(modifier = Modifier.height(16.dp))
-//
-//            Text(
-//                text = "Products",
-//                style = MaterialTheme.typography.headlineSmall,
-//                modifier = Modifier.padding(bottom = 16.dp)
-//            )
-//            ProductList(
-//                products = products,
-//                onLoadMore = {
-//                    Log.d("HomeScreen", "Load more triggered.")
-//                },
-//                onProductClick = onProductClick,
-//                onAddToCart = { product ->
-//                    CartManager.addToCart(product.id)
-//                    Log.d("HomeScreen", "Added to cart: ${product.productName}")
-//
-//                    Toast.makeText(context, "${product.productName} added to cart", Toast.LENGTH_SHORT).show()
-//                }
-//            )
-//        }
+
     }
 }
 

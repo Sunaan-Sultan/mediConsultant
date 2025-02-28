@@ -42,6 +42,7 @@ fun BioMetricRegistrationScreen(navController: NavHostController) {
         AppBar(
             navController = navController,
             showCartIcon = false,
+            showBackButton = true,
             title = "$title TouchID",
         )
         Box(
@@ -53,7 +54,6 @@ fun BioMetricRegistrationScreen(navController: NavHostController) {
             val window = rememberWindowSizeClass()
             MediConsultantTheme(window) {
                 BiometricRegistrationView2(navController)
-//                BioMetricRegistrationView(navController)
             }
         }
     }

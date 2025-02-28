@@ -13,12 +13,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.project.repository.R
 import com.project.mediConsultant.ui.appbar.AppBar
 import com.project.mediConsultant.ui.theme.BackgroundColor
 import com.project.mediConsultant.ui.theme.MediConsultantTheme
@@ -32,6 +28,7 @@ fun ForgetPasswordScreen(navController: NavHostController) {
         AppBar(
             navController = navController,
             showCartIcon = false,
+            showBackButton = true,
             title = "Password Recovery",
         )
         Box(

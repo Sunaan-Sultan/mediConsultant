@@ -1,8 +1,6 @@
 package com.project.mediConsultant.ui.biometricRegistration
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.widget.Toast
 import androidx.biometric.BiometricPrompt
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -11,6 +9,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -19,18 +18,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Checkbox
-import androidx.compose.material.CheckboxDefaults
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material.*
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarData
 import androidx.compose.material3.SnackbarHost
@@ -83,15 +71,11 @@ fun BiometricRegistrationView2(navController: NavHostController) {
     var passwordVisible by remember { mutableStateOf(false) }
     var isValidationErrorDialogVisible by remember { mutableStateOf(false) }
     var enableButtonEnabled by remember { mutableStateOf(false) }
-    var enableNextButton by remember { mutableStateOf(false) }
     var isChecked by remember { mutableStateOf(false) }
-    var showWebView by remember { mutableStateOf(false) }
     val placeholderTextColor = if (isSystemInDarkTheme()) Color(0x83F1F3F4) else Color.DarkGray
     val context = LocalContext.current
-    var successText1 by remember { mutableStateOf("") }
-    var shouldNavigateToNextScreen by remember { mutableStateOf(false) }
     val preferencesManager = PreferencesManager(context)
-    val getpreferenceData = preferencesManager.getKey("RegistrationKey", "default_value")
+    preferencesManager.getKey("RegistrationKey", "default_value")
 
     // Validate the fields and get the result and error message
     var (isValidationSuccess, errorMessage, errorFlags) = InputFieldValidator.validateFields(
@@ -113,7 +97,7 @@ fun BiometricRegistrationView2(navController: NavHostController) {
 
     val executor = remember { ContextCompat.getMainExecutor(context) }
     // Creating a BiometricPrompt instance for the first step of biometric authentication
-    val biometricPromptStepOne = BiometricPrompt(
+    BiometricPrompt(
         context as FragmentActivity,
         executor,
         object : BiometricPrompt.AuthenticationCallback() {
@@ -173,7 +157,7 @@ fun BiometricRegistrationView2(navController: NavHostController) {
         ) {
             Row {
                 Column(modifier = Modifier.padding(32.dp)) {
-                    TextField(
+                    OutlinedTextField(
                         value = username,
                         onValueChange = {
                             if (isWithinMaxCharLimit(it, 40)) {
@@ -189,18 +173,19 @@ fun BiometricRegistrationView2(navController: NavHostController) {
                         colors = TextFieldDefaults.outlinedTextFieldColors(
                             textColor = contentColor,
                             unfocusedLabelColor = contentColor,
-                            unfocusedBorderColor = if (isUsernameError) Color.Red else contentColor,
-                            focusedBorderColor = if (isUsernameError) Color.Red else contentColor,
+                            unfocusedBorderColor = contentColor,
+                            focusedBorderColor = contentColor,
                             focusedLabelColor = contentColor,
                             cursorColor = contentColor,
                             leadingIconColor = contentColor,
-                            placeholderColor = placeholderTextColor,
+                            placeholderColor = contentColor,
                         ),
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 5.dp, bottom = 5.dp, end = 0.dp, start = 0.dp),
                     )
-                    TextField(
+                    Spacer(modifier = Modifier.height(5.dp))
+                    OutlinedTextField(
                         value = password,
                         onValueChange = {
                             if (isWithinMaxCharLimit(it, 20)) {
@@ -215,12 +200,12 @@ fun BiometricRegistrationView2(navController: NavHostController) {
                         colors = TextFieldDefaults.outlinedTextFieldColors(
                             textColor = contentColor,
                             unfocusedLabelColor = contentColor,
-                            unfocusedBorderColor = if (isPasswordError) Color.Red else contentColor,
-                            focusedBorderColor = if (isPasswordError) Color.Red else contentColor,
+                            unfocusedBorderColor = contentColor,
+                            focusedBorderColor = contentColor,
                             focusedLabelColor = contentColor,
                             cursorColor = contentColor,
                             leadingIconColor = contentColor,
-                            placeholderColor = placeholderTextColor,
+                            placeholderColor = contentColor,
                         ),
                         trailingIcon = {
                             val visibilityIcon =
@@ -258,7 +243,7 @@ fun BiometricRegistrationView2(navController: NavHostController) {
                             },
                             colors = CheckboxDefaults.colors(
                                 uncheckedColor = contentColor,
-                                checkedColor = contentColor,
+                                checkedColor = PrimaryColor,
                             ),
                             modifier = Modifier.offset(x = (-10).dp),
                         )
@@ -344,12 +329,6 @@ fun BiometricRegistrationView2(navController: NavHostController) {
                                 modifier = Modifier.padding(5.dp),
                                 fontSize = 16.sp,
                             )
-
-//                        Icon(
-//                            painter = painterResource(id = R.drawable.baseline_keyboard_arrow_right_24),
-//                            contentDescription = null,
-//                            tint = contentColor,
-//                        )
                         }
                         if (isValidationErrorDialogVisible) {
                             AlertDialog(
@@ -424,7 +403,4 @@ fun BiometricRegistrationView2(navController: NavHostController) {
         }
     }
 
-    fun showToast(context: Context, message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-    }
 }

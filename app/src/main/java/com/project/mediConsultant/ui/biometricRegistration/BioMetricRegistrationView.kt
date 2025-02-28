@@ -19,17 +19,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Card
-import androidx.compose.material.Checkbox
-import androidx.compose.material.CheckboxDefaults
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -495,7 +485,7 @@ fun BioMetricRegistrationView(navController: NavHostController) {
                             ),
                             trailingIcon = {
                                 val visibilityIcon =
-                                    if (passwordVisible) com.project.repository.R.drawable.baseline_visibility_off_24 else com.project.repository.R.drawable.baseline_visibility_24
+                                    if (passwordVisible) R.drawable.baseline_visibility_off_24 else R.drawable.baseline_visibility_24
                                 val visibilityIconContentDescription =
                                     if (passwordVisible) "Hide password" else "Show password"
                                 Icon(
@@ -629,9 +619,9 @@ fun BioMetricRegistrationView(navController: NavHostController) {
                         title = {
                             Image(
                                 painter = if (getErrorMessage() == "Success") {
-                                    painterResource(id = com.project.repository.R.drawable.success)
+                                    painterResource(id = R.drawable.success)
                                 } else {
-                                    painterResource(id = com.project.repository.R.drawable.close)
+                                    painterResource(id = R.drawable.close)
                                 },
                                 contentDescription = null,
                                 modifier = Modifier
@@ -748,7 +738,7 @@ fun BioMetricRegistrationView(navController: NavHostController) {
             }
             if (fourthCardEnable) {
                 Row(
-                    modifier = Modifier.clickable() {
+                    modifier = Modifier.clickable {
                     },
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically,

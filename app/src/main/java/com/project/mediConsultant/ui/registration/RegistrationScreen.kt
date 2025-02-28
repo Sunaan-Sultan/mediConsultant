@@ -34,6 +34,7 @@ fun RegistrationScreen(navController: NavHostController) {
         AppBar(
             navController = navController,
             showCartIcon = false,
+            showBackButton = true,
             title = "Registration",
         )
         Box(

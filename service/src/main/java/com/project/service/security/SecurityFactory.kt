@@ -19,7 +19,7 @@ object SecurityFactory {
     }
 
     fun getIdentityService(): IdentityService {
-        return getIdentityService("LEADS")
+        return getIdentityService("MEDICONSULTANT")
     }
 
     fun getIdentityRepository(): IdentityRepository {

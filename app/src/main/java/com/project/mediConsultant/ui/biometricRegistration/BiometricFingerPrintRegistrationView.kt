@@ -75,8 +75,6 @@ fun BiometricFingerPrintRegistrationView(
 
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                 super.onAuthenticationSucceeded(result)
-
-//                isValidationErrorDialogVisible = true
                 if (enableButtonEnabled == false) {
                     enableButtonEnabled = true
                     isAnimationPlaying = false
@@ -85,8 +83,6 @@ fun BiometricFingerPrintRegistrationView(
 
             override fun onAuthenticationFailed() {
                 super.onAuthenticationFailed()
-
-//                showToast(context, "Authentication error")
             }
         },
     )
@@ -98,14 +94,14 @@ fun BiometricFingerPrintRegistrationView(
     } else {
         "Enable"
     }
-    val currentRoute =
-        remember { mutableStateOf(navController.currentBackStackEntry?.destination?.route) }
+    val currentRoute = remember { mutableStateOf(navController.currentBackStackEntry?.destination?.route) }
     val window = rememberWindowSizeClass()
     MediConsultantTheme(window) {
     Column {
         AppBar(
             navController = navController,
             showCartIcon = false,
+            showBackButton = true,
             title = "$title TouchID"
         )
         Box(

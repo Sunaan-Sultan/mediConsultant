@@ -25,7 +25,7 @@ class LoginPresenter {
         username: String,
         password: String,
     ): AuthResult {
-        val identityService = SecurityFactory.getIdentityService("LEADS")
+        val identityService = SecurityFactory.getIdentityService("MEDICONSULTANT")
 
         // Perform authentication using the identity service
         return if (identityService.authenticate(username, password)) {

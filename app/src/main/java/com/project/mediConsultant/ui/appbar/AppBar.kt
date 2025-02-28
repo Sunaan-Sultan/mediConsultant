@@ -1,5 +1,7 @@
 package com.project.mediConsultant.ui.appbar
+import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -8,7 +10,12 @@ import androidx.navigation.NavHostController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppBar(title: String, showCartIcon: Boolean, navController: NavHostController) {
+fun AppBar(
+    title: String,
+    showCartIcon: Boolean,
+    showBackButton: Boolean,
+    navController: NavHostController
+) {
     TopAppBar(
         title = {
             Text(
@@ -16,7 +23,16 @@ fun AppBar(title: String, showCartIcon: Boolean, navController: NavHostControlle
                 color = Color.White
             )
         },
-        navigationIcon = {},
+        navigationIcon = {
+            if (showBackButton) {
+                IconButton(onClick = { navController.popBackStack() }) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Back"
+                    )
+                }
+            }
+        },
         actions = {
             if (showCartIcon) {
                 IconButton(onClick = {

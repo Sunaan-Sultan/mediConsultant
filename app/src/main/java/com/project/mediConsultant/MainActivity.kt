@@ -32,27 +32,34 @@ class MainActivity : FragmentActivity() {
 
                 val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
-                // Debugging to confirm the current route
                 LaunchedEffect(currentRoute) {
                     println("Current Route: $currentRoute")
                 }
+
+                val title = when (currentRoute) {
+                    "productDetail/{productId}" -> "Product Detail"
+                    "profile" -> "Profile"
+                    "myCart" -> "My Cart"
+                    else -> "Medi Consultant"
+                }
+
+                val showBackButton = currentRoute == "myCart"
 
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     topBar = {
                         AppBar(
-                            title =
-                            if (currentRoute == "productDetail/{productId}") "Product Detail"
-                            else if (currentRoute == "profile") "Profile"
-                            else if (currentRoute == "myCart") "My Cart"
-                            else "Medi Consultant",
-                            //showCartIcon = currentRoute != "productDetail/{productId}",
+                            title = title,
                             showCartIcon = false,
-                            navController
+                            showBackButton = showBackButton,
+                            navController = navController
                         )
                     },
                     bottomBar = {
-                        if (currentRoute != "productDetail/{productId}" && currentRoute != "myCart" && currentRoute != "checkout") {
+                        if (currentRoute != "productDetail/{productId}" &&
+                            currentRoute != "myCart" &&
+                            currentRoute != "checkout"
+                        ) {
                             BottomNavigationBar(navController)
                         }
                     }

@@ -71,40 +71,12 @@ fun ProductView(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp),
-            placeholder = { Text(text = "Search products...") },
+            placeholder = { Text(text = "Search...") },
             singleLine = true,
             colors = TextFieldDefaults.colors(
-//                backgroundColor = MaterialTheme.colorScheme.surface,
                 focusedContainerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
                 unfocusedContainerColor  = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
             )
         )
-
-        // Products Header
-        Text(
-            text = "Products",
-            style = MaterialTheme.typography.headlineSmall,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
-
-        // Product List
-        if (filteredProducts.isEmpty()) {
-            Text("No products found.", style = MaterialTheme.typography.bodyLarge)
-        } else {
-            ProductList(
-                products = filteredProducts,
-                onLoadMore = {
-                    Log.d("ProductView", "Load more triggered.")
-
-                },
-                onProductClick = onProductClick,
-                onAddToCart = { product ->
-                    CartManager.addToCart(product.id)
-                    Log.d("ProductView", "Added to cart: ${product.productName}")
-
-                    Toast.makeText(context, "${product.productName} added to cart", Toast.LENGTH_SHORT).show()
-                }
-            )
-        }
     }
 }
