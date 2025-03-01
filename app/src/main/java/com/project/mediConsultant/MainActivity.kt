@@ -25,6 +25,11 @@ class MainActivity : FragmentActivity() {
             mockLoader.init()
         }
 
+        // Read the userRole from the intent; default to "member" if not provided
+        val userRole = intent.getStringExtra("userRole") ?: "member"
+        // Determine the startDestination based on userRole
+        val startDestination = "home"
+
         setContent {
             val window = rememberWindowSizeClass()
             MediConsultantTheme(window) {
@@ -66,7 +71,9 @@ class MainActivity : FragmentActivity() {
                 ) { innerPadding ->
                     Navigation(
                         navController = navController,
-                        innerPadding = innerPadding
+                        innerPadding = innerPadding,
+                        startDestination = startDestination,
+                        userRole = userRole
                     )
                 }
             }

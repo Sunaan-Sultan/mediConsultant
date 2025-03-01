@@ -1,17 +1,18 @@
 package com.project.mediConsultant.ui.login
 
 import android.content.Context
+import com.project.models.users.User
 import com.project.service.security.SecurityFactory
 
 // Sealed class to represent different authentication results
 sealed class AuthResult {
-    object Success : AuthResult()
+    data class Success(val user: User) : AuthResult()
     object InvalidUsername : AuthResult()
     object InvalidPassword : AuthResult()
 }
 
 // Presenter class for handling login functionality
-class LoginPresenter {
+class LoginPresenter(private val context: Context) {
     /**
      * Performs login authentication.
      *
@@ -20,16 +21,17 @@ class LoginPresenter {
      * @param password The provided password.
      * @return An instance of AuthResult representing the authentication result.
      */
-    fun login(
-        context: Context,
-        username: String,
-        password: String,
-    ): AuthResult {
-        val identityService = SecurityFactory.getIdentityService("MEDICONSULTANT")
-
-        // Perform authentication using the identity service
+    fun login(username: String, password: String): AuthResult {
+        val identityService = SecurityFactory.getIdentityService(context,"MEDICONSULTANT")
         return if (identityService.authenticate(username, password)) {
-            AuthResult.Success
+            // Retrieve user details after successful authentication
+            val user = identityService.getUser(username)
+            if (user != null) {
+                AuthResult.Success(user)
+            } else {
+                // This case should rarely happen if authentication passed
+                AuthResult.InvalidUsername
+            }
         } else {
             if (!identityService.userExists(username)) {
                 AuthResult.InvalidUsername

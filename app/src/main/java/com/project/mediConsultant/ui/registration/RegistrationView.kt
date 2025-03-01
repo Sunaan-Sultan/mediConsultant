@@ -21,6 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -50,6 +51,7 @@ fun RegistrationView(navController: NavHostController) {
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
     var isValidationErrorDialogVisible by remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
     val (isValidationSuccess, errorMessage) = validateFields(
         username,
@@ -308,6 +310,7 @@ fun RegistrationView(navController: NavHostController) {
                 if (isValidationSuccess) {
                     val registrationBean = RegistrationPresenter()
                     val response = registrationBean.registration(
+                        context,
                         username,
                         firstName,
                         lastName,

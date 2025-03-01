@@ -15,7 +15,7 @@ class ForgetPasswordPresenter {
         email: String,
     ): Boolean {
         // Obtain an instance of the identity service using the SecurityFactory
-        val identityService = SecurityFactory.getIdentityService("MEDICONSULTANT")
+        val identityService = SecurityFactory.getIdentityService(context, "MEDICONSULTANT")
         // This method is responsible for initiating the password recovery process
         return identityService.passwordRecovery(username, dateOfBirth, mobileNumber, email)
     }

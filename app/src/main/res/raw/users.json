@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "username": "admin",
+    "password": "Admin@123",
+    "isMember": false,
+    "userRole": "admin"
+  },
+  {
+    "id": 2,
+    "username": "provider",
+    "password": "Provider@123",
+    "isMember": false,
+    "userRole": "provider"
+  },
+  {
+    "id": 3,
+    "username": "member",
+    "password": "Member@123",
+    "isMember": true,
+    "userRole": "member"
+  }
+]

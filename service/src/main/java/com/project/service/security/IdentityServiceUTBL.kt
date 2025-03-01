@@ -2,6 +2,7 @@ package com.project.service.security
 
 import com.project.repository.security.IdentityRepositoryImpl
 import com.project.models.security.IdentityService
+import com.project.models.users.User
 
 class IdentityServiceUTBL : IdentityService {
     override fun userExists(username: String): Boolean {
@@ -12,6 +13,10 @@ class IdentityServiceUTBL : IdentityService {
         val userRepository = IdentityRepositoryImpl()
         val apiResponse = userRepository.getToken(username, password)
         return apiResponse!!.isNotEmpty()
+    }
+
+    override fun getUser(username: String): User? {
+        TODO("Not yet implemented")
     }
 
     override fun biometricRegistered(username: String, password: String): String {

@@ -3,6 +3,7 @@ package com.project.repository.security
 import com.project.repository.RestUtil.BASE_URL
 import com.project.models.security.Identity
 import com.project.models.security.IdentityRepository
+import com.project.models.users.User
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -49,6 +50,10 @@ class IdentityRepositoryImpl : IdentityRepository {
             }
         }
         return response!!
+    }
+
+    override fun getUser(username: String): User? {
+        TODO("Not yet implemented")
     }
 
     override fun getBiometricRegistrationToken(username: String, password: String): String {

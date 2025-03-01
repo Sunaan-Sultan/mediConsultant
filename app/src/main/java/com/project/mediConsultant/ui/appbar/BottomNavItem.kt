@@ -19,6 +19,9 @@ import com.project.models.product.Product
 import com.project.mediConsultant.ui.cart.CheckoutScreen
 import com.project.mediConsultant.ui.cart.MyCartScreen
 import com.project.mediConsultant.ui.home.HomeScreen
+import com.project.mediConsultant.ui.home.admin.AdminHomeScreen
+import com.project.mediConsultant.ui.home.member.MemberHomeScreen
+import com.project.mediConsultant.ui.home.provider.ProviderHomeScreen
 import com.project.mediConsultant.ui.product.ProductDetailScreen
 import com.project.mediConsultant.ui.product.ProductScreen
 import com.project.mediConsultant.ui.product.ProductView
@@ -33,7 +36,12 @@ sealed class BottomNavItem(val route: String, val label: String, val icon: Image
 }
 
 @Composable
-fun Navigation(navController: NavHostController, innerPadding: PaddingValues) {
+fun Navigation(
+    navController: NavHostController,
+    innerPadding: PaddingValues,
+    startDestination: String,
+    userRole: String
+) {
     val cartItems = remember { mutableStateListOf<Product>() }
     val context = LocalContext.current
     val productService = ProductServiceImpl()
@@ -41,19 +49,24 @@ fun Navigation(navController: NavHostController, innerPadding: PaddingValues) {
 
     NavHost(
         navController = navController,
-        startDestination = "home",
+        startDestination = startDestination,
         modifier = Modifier.padding(innerPadding)
     ) {
         composable("home") {
-            HomeScreen(
-                context = LocalContext.current,
-                onCategoryClick = { category ->
-                    navController.navigate("products/$category")
-                },
-                onProductClick = { product ->
-                    navController.navigate("productDetail/${product.id}")
-                }
-            )
+            when (userRole.lowercase()) {
+                "admin" -> AdminHomeScreen()
+                "provider" -> ProviderHomeScreen()
+                "member" -> MemberHomeScreen()
+                else -> HomeScreen(
+                    context = LocalContext.current,
+                    onCategoryClick = { category ->
+                        navController.navigate("products/$category")
+                    },
+                    onProductClick = { product ->
+                        navController.navigate("productDetail/${product.id}")
+                    }
+                )
+            }
         }
 
         composable("products/{category}") { backStackEntry ->
@@ -120,6 +133,16 @@ fun Navigation(navController: NavHostController, innerPadding: PaddingValues) {
                     navController.popBackStack("home", inclusive = false)
                 }
             )
+        }
+
+        composable("admin_home") {
+            AdminHomeScreen()
+        }
+        composable("provider_home") {
+            ProviderHomeScreen()
+        }
+        composable("member_home") {
+            MemberHomeScreen()
         }
 
 

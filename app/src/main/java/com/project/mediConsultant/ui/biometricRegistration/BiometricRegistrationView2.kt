@@ -1,6 +1,7 @@
 package com.project.mediConsultant.ui.biometricRegistration
 
 import android.annotation.SuppressLint
+import android.content.Context
 import androidx.biometric.BiometricPrompt
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -269,13 +270,13 @@ fun BiometricRegistrationView2(navController: NavHostController) {
 
                     Button(
                         onClick = {
-                            val loginBean = LoginPresenter()
+                            val loginBean = LoginPresenter(context)
                             // Perform login authentication
-                            val authResult = loginBean.login(context, username, password)
+                            val authResult = loginBean.login(username, password)
 
                             // Handle the authentication result
                             when (authResult) {
-                                AuthResult.Success -> {
+                                is AuthResult.Success -> {
                                     preferencesManager.saveUsername("Username", username)
                                     preferencesManager.saveUsername("Password", password)
                                     navController.navigate("fingerprint")

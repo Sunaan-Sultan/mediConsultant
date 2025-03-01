@@ -277,24 +277,24 @@ fun LoginView(navController: NavHostController, preferencesManager: PreferencesM
 
                     Button(
                         onClick = {
-                            val loginBean = LoginPresenter()
+                            val loginBean = LoginPresenter(context)
                             // Perform login authentication
-                            val authResult = loginBean.login(context, username, password)
+                            val authResult = loginBean.login(username, password)
 
-                            // Handle the authentication result
                             when (authResult) {
-                                AuthResult.Success -> {
-                                    val intent = Intent(context, MainActivity::class.java)
+                                is AuthResult.Success -> {
+                                    // Create an intent to launch MainActivity
+                                    val intent = Intent(context, MainActivity::class.java).apply {
+                                        // Pass the user role (in lowercase) as an extra
+                                        putExtra("userRole", authResult.user.userRole.lowercase())
+                                    }
+                                    // Initialize your MockLoader service if needed
                                     val service = MockLoader(context)
-                                    // Initialize the MockLoader service
                                     runBlocking {
                                         service.init()
                                     }
-                                    // Start the HomeActivity
                                     context.startActivity(intent)
                                 }
-
-                                // If the username is invalid, show a snackbar with an error message
                                 AuthResult.InvalidUsername -> {
                                     scope.launch {
                                         snackbarHostState.showSnackbar(
@@ -304,10 +304,8 @@ fun LoginView(navController: NavHostController, preferencesManager: PreferencesM
                                             ),
                                         )
                                     }
-                                    // Hide the keyboard
                                     keyboardController?.hide()
                                 }
-
                                 AuthResult.InvalidPassword -> {
                                     scope.launch {
                                         snackbarHostState.showSnackbar(
@@ -319,15 +317,11 @@ fun LoginView(navController: NavHostController, preferencesManager: PreferencesM
                                     }
                                     keyboardController?.hide()
                                 }
-
-                                // Handle other authentication results if needed
-                                else -> {}
                             }
                         },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = AppTheme.dimens.large),
-
                         colors = ButtonDefaults.buttonColors(
                             backgroundColor = PrimaryColor,
                             contentColor = White,

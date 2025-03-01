@@ -1,18 +1,24 @@
 package com.project.service.security
 
+import android.content.Context
 import com.project.models.security.IdentityService
+import com.project.models.users.User
 
-class IdentityServiceImpl : IdentityService {
+class IdentityServiceImpl(private val context: Context) : IdentityService {
     override fun authenticate(username: String, password: String): Boolean {
-        val identityRepository = SecurityFactory.getIdentityRepository()
+        val identityRepository = SecurityFactory.getIdentityRepository(context)
         val identityResponse = identityRepository.getToken(username, password)
         return identityResponse.isNotEmpty()
     }
 
+    override fun getUser(username: String): User? {
+        val identityRepository = SecurityFactory.getIdentityRepository(context)
+        return identityRepository.getUser(username)
+    }
+
     override fun biometricRegistered(username: String, password: String): String {
-        val identityRepository = SecurityFactory.getIdentityRepository()
-        val identityResponse = identityRepository.getBiometricRegistrationToken(username, password)
-        return identityResponse
+        val identityRepository = SecurityFactory.getIdentityRepository(context)
+        return identityRepository.getBiometricRegistrationToken(username, password)
     }
     override fun passwordRecovery(
         username: String,
@@ -20,9 +26,8 @@ class IdentityServiceImpl : IdentityService {
         mobileNumber: String,
         email: String,
     ): Boolean {
-        val identityRepository = SecurityFactory.getIdentityRepository()
-        val identityResponse = identityRepository.getPasswordRecoveryToken(username, dateOfBirth, mobileNumber, email)
-        return identityResponse
+        val identityRepository = SecurityFactory.getIdentityRepository(context)
+        return identityRepository.getPasswordRecoveryToken(username, dateOfBirth, mobileNumber, email)
     }
 
     override fun registered(
@@ -35,7 +40,7 @@ class IdentityServiceImpl : IdentityService {
         password: String,
         confirmPassword: String,
     ): Boolean {
-        val identityRepository = SecurityFactory.getIdentityRepository()
+        val identityRepository = SecurityFactory.getIdentityRepository(context)
         val identityResponse = identityRepository.getRegistrationToken(
             username,
             firstname,
@@ -50,7 +55,8 @@ class IdentityServiceImpl : IdentityService {
     }
 
     override fun userExists(username: String): Boolean {
-        val identityRepository = SecurityFactory.getIdentityRepository()
+        val identityRepository = SecurityFactory.getIdentityRepository(context)
         return identityRepository.userExists(username)
     }
 }
+
